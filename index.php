@@ -6,36 +6,36 @@ require './PHPmailer/Exception.php';
 require './PHPmailer/PHPMailer.php';
 require './PHPmailer/SMTP.php';
 
-//Create an instance; passing `true` enables exceptions
+//Llamamos a la clase PHPMailer, con el parámetro true, para que permita excepciones
 $mail = new PHPMailer(true);
 
 try {
     //Server settings
-    $mail->SMTPDebug = 0;                      //Enable verbose debug output
-    $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = 'agapitoelpro@gmail.com';                     //SMTP username
-    $mail->Password   = 'ohjkoedihypkwxsb';                               //SMTP password
-    $mail->SMTPSecure = 'tls';            //Enable implicit TLS encryption
-    $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+    $mail->SMTPDebug = 0;                       //0=No ver Debug output - 2=Ver Debug output
+    $mail->isSMTP();                            //Enviar usando SMTP
+    $mail->Host       = 'smtp.gmail.com';       //SMTP del servidor desde el que vamos a enviar
+    $mail->SMTPAuth   = true;                   //Habilitar o deshabilitar autentificacion SMTP
+    $mail->Username   = 'example@gmail.com';    //Correo emisor
+    $mail->Password   = 'password';             //Contraseña o contraseña de aplicación emisor
+    $mail->SMTPSecure = 'tls';                  //Encriptación tls o ssl. (Mejor tls ya que es una versión mejorada)
+    $mail->Port       = 587;                    //Puerto TCP por el cual nos vamos a conectar. 587 o 465 
 
-    //Recipients
-    $mail->setFrom('agapitoelpro@gmail.com', 'Agar');
-    $mail->addAddress('samuelherbe@gmail.com', 'SAMUEL');     //Add a recipient
+    //Emisor y receptor
+    $mail->setFrom('emisor@gmail.com', 'NombreEmisor');       //Añadir emisor
+    $mail->addAddress('receptor@gmail.com', 'NombreReceptor');     //Añadir receptor
 
 
     //Adjunto
-    //$mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-    //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+    //$mail->addAttachment('/var/tmp/file.tar.gz');         //Añadir archivo adjunto
+    //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Añadir archivo adjunto con nombre
 
     //Content
-    $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = 'Esto es el asunto';
-    $mail->Body    = 'Esto es el cuerpo del mensaje';
+    $mail->isHTML(true);                                  //Aceptar formato HTML en el cuerpo del mensaje
+    $mail->Subject = 'Esto es el asunto';                 //Asunto
+    $mail->Body    = 'Esto es el cuerpo del mensaje';     //Cuerpo del mensaje
 
-    $mail->send();
-    echo 'Se envió con éxito';
-} catch (Exception $e) {
-    echo "Hubo un error al envíar el correo: {$mail->ErrorInfo}";
+    $mail->send();  //Enviar mensaje
+    echo 'Se envió con éxito';  //Mensaje de éxito
+} catch (Exception $e) {    //Si hay un error se captura
+    echo "Hubo un error al envíar el correo: {$mail->ErrorInfo}";   //Y se muestra el mensaje de dicho error
 }
